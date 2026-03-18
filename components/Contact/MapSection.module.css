@@ -1,0 +1,34 @@
+.section {
+  padding: 0 2rem 8rem;
+  background: var(--background);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.mapWrapper {
+  width: 100%;
+  height: 450px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  filter: grayscale(1) invert(1) brightness(0.8) contrast(1.2); /* Tech/Dark style map */
+  transition: filter 0.3s;
+}
+
+.mapWrapper:hover {
+  filter: grayscale(0.5) invert(0) brightness(1) contrast(1);
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .mapWrapper {
+    height: 300px;
+  }
+}

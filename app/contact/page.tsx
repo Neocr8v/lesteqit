@@ -1,13 +1,15 @@
 import Navbar from '@/components/Navbar/Navbar';
-import Hero from '@/components/Hero/Hero';
-import BentoGrid from '@/components/BentoGrid/BentoGrid';
+import ContactHero from '@/components/Contact/ContactHero';
+import ContactForm from '@/components/Contact/ContactForm';
+import MapSection from '@/components/Contact/MapSection';
 
-export default function Home() {
+export default function ContactPage() {
   return (
     <main>
       <Navbar />
-      <Hero />
-      <BentoGrid />
+      <ContactHero />
+      <ContactForm />
+      <MapSection />
       <footer style={{ 
         padding: '6rem 2rem', 
         textAlign: 'center', 
@@ -19,6 +21,7 @@ export default function Home() {
         <p>39 Boundary Road, East Legon</p>
         <p>+233 59 895 4346 | info@lesteqitsolutions.com</p>
         <p style={{ opacity: 0.5, marginTop: '1rem' }}>© {new Date().getFullYear()} Lesteq IT Solutions. All rights reserved.</p>
-      </footer>    </main>
+      </footer>
+    </main>
   );
 }
