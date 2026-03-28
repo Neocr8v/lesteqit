@@ -2,8 +2,6 @@ import styles from './TeamSection.module.css';
 
 const team = [
   { name: "Lesley Kwame Donkor", role: "CEO & Founder", image: "/sikani.jpg" },
-  { name: "Redeemer Folivie", role: "Project Manager", image: "/redeemer.jpg" },
-  { name: "Priscilla Adjahi", role: "Technical Writer", image: "/priscilla.jpg" },
 ];
 
 export default function TeamSection() {
