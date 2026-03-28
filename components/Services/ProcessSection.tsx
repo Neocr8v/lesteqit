@@ -15,7 +15,11 @@ export default function ProcessSection() {
         <h2 className={styles.heading}>Our <span className={styles.gradient}>Process</span></h2>
         <div className={styles.timeline}>
           {steps.map((step, index) => (
-            <div key={index} className={styles.step}>
+            <div 
+              key={index} 
+              className={`${styles.step} animate-fade-in`} 
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
               <div className={styles.number}>{index + 1}</div>
               <div className={styles.content}>
                 <h3>{step.title}</h3>

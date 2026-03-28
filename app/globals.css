@@ -56,8 +56,50 @@ button {
   100% { box-shadow: 0 0 5px var(--accent-glow); }
 }
 
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scrollDown {
+  0% { transform: translateY(0); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateY(10px); opacity: 0; }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 40px;
+  border: 2px solid var(--foreground);
+  border-radius: 12px;
+  opacity: 0.5;
+}
+
+.scroll-indicator::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  margin-left: -2px;
+  width: 4px;
+  height: 8px;
+  background: var(--foreground);
+  border-radius: 2px;
+  animation: scrollDown 2s infinite;
 }
 
 /* Glassmorphism Utility */

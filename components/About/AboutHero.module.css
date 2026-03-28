@@ -1,19 +1,54 @@
 .section {
-  padding: 10rem 2rem 6rem;
+  position: relative;
+  padding: 12rem 2rem 8rem;
   background: var(--background);
+  overflow: hidden;
+}
+
+.heroBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 600px; /* Limit height of background image */
+  z-index: 0;
+}
+
+.bgImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0.4) 0%,
+    rgba(10, 10, 10, 0.8) 70%,
+    var(--background) 100%
+  );
 }
 
 .container {
+  position: relative;
   max-width: 1000px;
   margin: 0 auto;
+  z-index: 1;
 }
 
 .title {
-  font-size: 3.5rem;
+  font-size: clamp(2.5rem, 8vw, 4rem);
   font-weight: 800;
   margin-bottom: 3rem;
   text-align: center;
   letter-spacing: -0.04em;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 
 .gradient {
@@ -25,14 +60,15 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 4rem;
 }
 
 .lead {
   font-size: 1.5rem;
   line-height: 1.5;
-  opacity: 0.9;
+  opacity: 0.95;
   text-align: center;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
 }
 
 .grid {
@@ -42,32 +78,78 @@
 }
 
 .card {
-  padding: 2.5rem;
-  border-radius: 16px;
+  padding: 3rem;
+  border-radius: 24px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeIn 0.8s ease-out forwards;
+  opacity: 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
 }
 
 .card h3 {
-  margin-bottom: 1rem;
-  color: var(--secondary);
+  margin-bottom: 1.25rem;
+  font-weight: 700;
+  font-size: 1.5rem;
 }
 
 .card p {
-  opacity: 0.7;
+  opacity: 0.8;
   line-height: 1.6;
 }
 
 .text {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   line-height: 1.8;
   opacity: 0.8;
   text-align: justify;
 }
 
 @media (max-width: 768px) {
+  .section {
+    padding: 7.5rem 1.5rem 2rem;
+  }
+  .heroBackground {
+    height: 380px;
+  }
   .title {
-    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 2rem;
+  }
+  .content {
+    gap: 1rem;
   }
   .grid {
     grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .card {
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
+  .card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+  }
+  .card p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  .lead {
+    font-size: 1.1rem;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+  }
+  .text {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
   }
 }

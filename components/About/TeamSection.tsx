@@ -1,9 +1,9 @@
 import styles from './TeamSection.module.css';
 
 const team = [
-  { name: "John Doe", role: "CEO & Founder", image: "https://via.placeholder.com/300x400/0a0a0a/ffffff?text=CEO" },
-  { name: "Jane Smith", role: "Head of Design", image: "https://via.placeholder.com/300x400/0a0a0a/ffffff?text=Design" },
-  { name: "Alex Kwesi", role: "Lead Developer", image: "https://via.placeholder.com/300x400/0a0a0a/ffffff?text=Dev" },
+  { name: "Lesley Kwame Donkor", role: "CEO & Founder", image: "/sikani.jpg" },
+  { name: "Redeemer Folivie", role: "Project Manager", image: "/redeemer.jpg" },
+  { name: "Priscilla Adjahi", role: "Technical Writer", image: "/priscilla.jpg" },
 ];
 
 export default function TeamSection() {

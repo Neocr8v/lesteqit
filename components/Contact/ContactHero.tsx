@@ -3,7 +3,7 @@ import styles from './ContactHero.module.css';
 export default function ContactHero() {
   return (
     <section className={styles.section}>
-      <div className={styles.container}>
+      <div className={`${styles.container} animate-fade-in`}>
         <h1 className={styles.title}>
           Get in <span className={styles.gradient}>Touch</span>
         </h1>

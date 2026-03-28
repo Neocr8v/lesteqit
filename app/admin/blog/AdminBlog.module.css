@@ -1,0 +1,240 @@
+.section {
+  padding: 6rem 2rem 8rem;
+  background: var(--background);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.gradient {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  opacity: 0.6;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  justify-content: center;
+}
+
+.tabBtn {
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--foreground);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.activeTab {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+  box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  gap: 0.5rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-bottom: none;
+  padding: 0.75rem;
+  border-radius: 12px 12px 0 0;
+  flex-wrap: wrap;
+}
+
+.toolBtn {
+  padding: 0.4rem 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  color: var(--foreground);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.toolBtn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.editorArea {
+  border-radius: 0 0 12px 12px !important;
+}
+
+/* Management List */
+.manageGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.manageCard {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+}
+
+.manageThumb {
+  width: 120px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.manageInfo {
+  flex-grow: 1;
+}
+
+.manageTitle {
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.manageMeta {
+  font-size: 0.8rem;
+  opacity: 0.5;
+}
+
+.manageActions {
+  display: flex;
+  gap: 1rem;
+}
+
+.editBtn {
+  background: var(--secondary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.deleteBtn {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  transition: all 0.2s;
+}
+
+.deleteBtn:hover {
+  background: #ef4444;
+  color: white;
+}
+
+/* Form Styles */
+.form {
+  padding: 3rem;
+  border-radius: 24px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.formGroup label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.formGroup input, .formGroup textarea, .formGroup select {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  color: var(--foreground);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.formGroup input:focus, .formGroup textarea:focus, .formGroup select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.1);
+}
+
+.dropzone {
+  width: 100%;
+  height: 180px;
+  border: 2px dashed var(--glass-border);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+}
+
+.dragging { border-color: var(--accent); background: rgba(124, 58, 237, 0.05); }
+
+.preview { width: 100%; height: 100%; object-fit: cover; }
+
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+
+.submitBtn {
+  background: var(--accent);
+  color: white;
+  padding: 1.25rem;
+  border-radius: 12px;
+  font-weight: 700;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.cancelBtn {
+  background: transparent;
+  color: var(--foreground);
+  opacity: 0.5;
+  text-align: center;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .manageCard { flex-direction: column; text-align: center; }
+  .row { grid-template-columns: 1fr; }
+  .form { padding: 1.5rem; }
+}

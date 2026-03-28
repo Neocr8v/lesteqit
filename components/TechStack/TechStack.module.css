@@ -1,0 +1,45 @@
+.section {
+  padding: 4rem 0;
+  background: var(--background);
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  overflow: hidden;
+}
+
+.title {
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  opacity: 0.5;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 3rem;
+}
+
+.marqueeContainer {
+  width: 100%;
+  overflow: hidden;
+}
+
+.item {
+  padding: 0 4rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--foreground);
+  opacity: 0.4;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.item:hover {
+  opacity: 1;
+  color: var(--accent);
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .item {
+    padding: 0 2rem;
+    font-size: 1.1rem;
+  }
+}
