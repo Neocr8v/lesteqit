@@ -77,8 +77,8 @@ export default function PostDetailPage() {
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
         .replace(/_(.*?)_/g, '<em>$1</em>') // Italic
         .replace(/### (.*?)\n/g, '<h3>$1</h3>') // H3
-        .replace(/\[CENTER\](.*?)\[\/CENTER\]/gs, '<div style="text-align: center">$1</div>') // Center
-        .replace(/\[JUSTIFY\](.*?)\[\/JUSTIFY\]/gs, '<div style="text-align: justify">$1</div>'); // Justify
+        .replace(/\[CENTER\]([\s\S]*?)\[\/CENTER\]/g, '<div style="text-align: center">$1</div>') // Center
+        .replace(/\[JUSTIFY\]([\s\S]*?)\[\/JUSTIFY\]/g, '<div style="text-align: justify">$1</div>'); // Justify
 
       return <div key={i} dangerouslySetInnerHTML={{ __html: formattedHtml }} />;
     });
