@@ -12,8 +12,8 @@ export async function POST(request: Request) {
     }
 
     const { data, error } = await resend.emails.send({
-      from: 'Lesteq Website <onboarding@resend.dev>', // You should update this after domain verification
-      to: ['neocr8vmedia@gmail.com'],
+      from: 'Lesteq <contact@lesteqitsolutions.com>',
+      to: ['info@lesteqitsolutions.com'],
       subject: `New Contact Form: ${subject}`,
       replyTo: email,
       html: `
