@@ -16,7 +16,7 @@
     "content": "Cloud computing has revolutionized how businesses operate in the digital age. At Lesteq IT Solutions, we leverage the full power of Amazon Web Services (AWS) to build infrastructures that aren't just reliable—they're virtually indestructible. \n\nOur approach focuses on three core pillars: Auto-Scaling, Multi-Region Deployment, and Serverless Architecture. By distributing workloads across multiple availability zones, we ensure that even in the event of a regional outage, our clients' services remain online. This level of technical excellence is what sets Lesteq apart as a leader in IT solutions.",
     "category": "Cloud Computing",
     "date": "March 15, 2026",
-    "author": "Lesley Kwame Donkor",
+    "author": "Admin",
     "image": "/uploads/1774601424209-aws3.jpg"
   },
   {
@@ -26,7 +26,7 @@
     "content": "As cyber threats become more sophisticated, traditional firewalls are no longer enough. The future of security lies in Zero-Trust Architecture and AI-driven threat detection. \n\nIn 2026, data is the most valuable currency, and protecting it requires a proactive rather than reactive stance. Lesteq's security team implements military-grade encryption protocols and continuous monitoring systems that identify and neutralize threats before they can penetrate the perimeter. Security is not a product—it is a continuous process of refinement and vigilance.",
     "category": "Security",
     "date": "March 18, 2026",
-    "author": "Redeemer Folivie",
+    "author": "Admin",
     "image": "/uploads/1774601832564-cyber.webp"
   }
 ]

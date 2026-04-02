@@ -40,6 +40,7 @@ export default function AdminBlogPage() {
   
   const [formData, setFormData] = useState(initialForm);
   const [isEditing, setIsEditing] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     fetchPosts();
@@ -110,11 +111,15 @@ export default function AdminBlogPage() {
         body: JSON.stringify(formData)
       });
       if (res.ok) {
-        setFormData(initialForm);
-        setImagePreview(null);
-        setIsEditing(false);
-        setActiveTab('manage');
-        fetchPosts();
+        setSuccessMessage(isEditing ? 'Post updated successfully!' : 'Post published successfully!');
+        setTimeout(() => {
+          setSuccessMessage('');
+          setFormData(initialForm);
+          setImagePreview(null);
+          setIsEditing(false);
+          setActiveTab('manage');
+          fetchPosts();
+        }, 1500);
       }
     } catch (error) {
       console.error(error);
@@ -259,6 +264,12 @@ export default function AdminBlogPage() {
               <button type="submit" className={styles.submitBtn} disabled={loading}>
                 {loading ? 'Processing...' : (isEditing ? 'Update Insight' : 'Publish Insight')}
               </button>
+
+              {successMessage && (
+                <div style={{ color: '#22c55e', textAlign: 'center', marginTop: '1rem', fontWeight: 600 }}>
+                  {successMessage}
+                </div>
+              )}
               
               {isEditing && (
                 <button type="button" className={styles.cancelBtn} onClick={() => { setIsEditing(false); setActiveTab('manage'); setFormData(initialForm); setImagePreview(null); }}>
