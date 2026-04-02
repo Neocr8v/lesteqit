@@ -1,6 +1,52 @@
+'use client';
+
+import { useState } from 'react';
 import styles from './ContactForm.module.css';
 
 export default function ContactForm() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message');
+      }
+
+      setStatus('success');
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (error: any) {
+      console.error('Contact form error:', error);
+      setStatus('error');
+      setErrorMessage(error.message || 'Something went wrong. Please try again.');
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
   return (
     <section className={styles.section}>
       <div className={styles.container}>
@@ -60,27 +106,72 @@ export default function ContactForm() {
 
           {/* Form Column */}
           <div className={`${styles.formWrapper} animate-fade-in`} style={{ animationDelay: '0.2s' }}>
-            <form className={`${styles.form} glass`}>
+            <form className={`${styles.form} glass`} onSubmit={handleSubmit}>
               <div className={styles.row}>
                 <div className={styles.formGroup}>
                   <label>Full Name</label>
-                  <input type="text" placeholder="John Doe" required />
+                  <input 
+                    type="text" 
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="John Doe" 
+                    required 
+                  />
                 </div>
                 <div className={styles.formGroup}>
                   <label>Email Address</label>
-                  <input type="email" placeholder="john@example.com" required />
+                  <input 
+                    type="email" 
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="john@example.com" 
+                    required 
+                  />
                 </div>
               </div>
               <div className={styles.formGroup}>
                 <label>Subject</label>
-                <input type="text" placeholder="How can we help?" required />
+                <input 
+                  type="text" 
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  placeholder="How can we help?" 
+                  required 
+                />
               </div>
               <div className={styles.formGroup}>
                 <label>Message</label>
-                <textarea rows={6} placeholder="Describe your project or requirements in detail..." required></textarea>
+                <textarea 
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={6} 
+                  placeholder="Describe your project or requirements in detail..." 
+                  required
+                ></textarea>
               </div>
-              <button type="submit" className={styles.submitBtn}>
-                Send Message
+
+              {status === 'success' && (
+                <div className={styles.successMsg}>
+                  Message sent successfully! We'll get back to you soon.
+                </div>
+              )}
+
+              {status === 'error' && (
+                <div className={styles.errorMsg}>
+                  {errorMessage}
+                </div>
+              )}
+
+              <button 
+                type="submit" 
+                className={styles.submitBtn}
+                disabled={status === 'loading'}
+              >
+                {status === 'loading' ? 'Sending...' : 'Send Message'}
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="22" y1="2" x2="11" y2="13"></line>
                   <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
