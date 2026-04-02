@@ -97,9 +97,8 @@ export default function ContactForm() {
             <div className={styles.socialSection}>
               <h3>Follow Our Journey</h3>
               <div className={styles.socialLinks}>
-                <a href="#" className={styles.socialLink}>LinkedIn</a>
-                <a href="#" className={styles.socialLink}>Twitter</a>
-                <a href="#" className={styles.socialLink}>Instagram</a>
+                <a href="https://x.com/lesteqit?s=21" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>Twitter (X)</a>
+                <a href="https://www.instagram.com/lesteq_it_solutions?igsh=NWdxem11NDk3azAx" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>Instagram</a>
               </div>
             </div>
           </div>

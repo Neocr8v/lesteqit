@@ -71,6 +71,7 @@
   overflow: hidden;
   margin-bottom: 3rem;
   border: 1px solid var(--glass-border);
+  position: relative;
 }
 
 .image {
@@ -88,10 +89,15 @@
   margin-bottom: 5rem;
 }
 
+.inlineImageWrapper {
+  position: relative;
+  width: 100%;
+  margin: 2rem 0;
+}
+
 .inlineImage {
   width: 100%;
   border-radius: 16px;
-  margin: 2rem 0;
   border: 1px solid var(--glass-border);
 }
 
@@ -160,6 +166,7 @@
   border-radius: 20px;
   overflow: hidden;
   transition: all 0.3s ease;
+  position: relative;
 }
 
 .relatedCard:hover {
@@ -171,6 +178,7 @@
   width: 100%;
   aspect-ratio: 16/9;
   overflow: hidden;
+  position: relative;
 }
 
 .relatedInfo {

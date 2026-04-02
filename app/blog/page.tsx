@@ -1,9 +1,20 @@
-'use client';
-
-import { useState, useEffect } from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import Navbar from '@/components/Navbar/Navbar';
 import styles from './Blog.module.css';
+import fs from 'fs';
+import path from 'path';
+
+export const metadata: Metadata = {
+  title: 'Insights & Innovations | Lesteq Blog',
+  description: 'Exploring the frontiers of technology, design, and digital transformation with Lesteq IT Solutions.',
+  openGraph: {
+    title: 'Insights & Innovations | Lesteq Blog',
+    description: 'Exploring the frontiers of technology, design, and digital transformation.',
+    type: 'website',
+  },
+};
 
 interface Post {
   id: string;
@@ -15,22 +26,19 @@ interface Post {
   image: string;
 }
 
-export default function BlogPage() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
+function getPosts(): Post[] {
+  const postsFilePath = path.join(process.cwd(), 'data/posts.json');
+  try {
+    const fileContent = fs.readFileSync(postsFilePath, 'utf-8');
+    return JSON.parse(fileContent);
+  } catch (error) {
+    console.error('Failed to read posts:', error);
+    return [];
+  }
+}
 
-  useEffect(() => {
-    fetch('/api/posts')
-      .then(res => res.json())
-      .then(data => {
-        setPosts(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('Failed to fetch posts:', err);
-        setLoading(false);
-      });
-  }, []);
+export default function BlogPage() {
+  const posts = getPosts();
 
   return (
     <main>
@@ -46,18 +54,25 @@ export default function BlogPage() {
             </p>
           </div>
 
-          {loading ? (
-            <div style={{ textAlign: 'center', opacity: 0.5 }}>Loading insights...</div>
+          {posts.length === 0 ? (
+            <div style={{ textAlign: 'center', opacity: 0.5 }}>No insights available at the moment.</div>
           ) : (
             <div className={styles.grid}>
               {posts.map((post, index) => (
-                <Link href={`/blog/${post.id}`} key={post.id}>
+                <Link href={`/blog/${post.id}`} key={post.id} className={styles.linkCard}>
                   <article 
                     className={`${styles.postCard} glass animate-fade-in`}
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     <div className={styles.imageWrapper}>
-                      <img src={post.image} alt={post.title} className={styles.image} />
+                      <Image 
+                        src={post.image} 
+                        alt={post.title} 
+                        fill
+                        className={styles.image}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        priority={index < 3}
+                      />
                     </div>
                     <div className={styles.content}>
                       <span className={styles.category}>{post.category}</span>
