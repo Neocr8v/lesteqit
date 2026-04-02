@@ -1,73 +1,61 @@
+import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-
-const postsFilePath = path.join(process.cwd(), 'data/posts.json');
-
-function getPosts() {
-  const fileContent = fs.readFileSync(postsFilePath, 'utf-8');
-  return JSON.parse(fileContent);
-}
-
-function savePosts(posts: any) {
-  fs.writeFileSync(postsFilePath, JSON.stringify(posts, null, 2), 'utf-8');
-}
 
 export async function GET() {
   try {
-    const posts = getPosts();
-    return NextResponse.json(posts);
-  } catch (error) {
+    const { rows } = await sql`SELECT * FROM posts ORDER BY date DESC;`;
+    return NextResponse.json(rows);
+  } catch (error: any) {
+    console.error('Fetch error:', error);
     return NextResponse.json([], { status: 500 });
   }
 }
 
 export async function POST(request: Request) {
   try {
-    const newPost = await request.json();
-    const posts = getPosts();
+    const { title, category, author, excerpt, content, image } = await request.json();
+    const id = Date.now().toString();
+    const date = new Date().toLocaleDateString('en-US', {
+      month: 'long', day: 'numeric', year: 'numeric'
+    });
     
-    const postWithId = {
-      ...newPost,
-      id: Date.now().toString(),
-      date: new Date().toLocaleDateString('en-US', {
-        month: 'long', day: 'numeric', year: 'numeric'
-      })
-    };
+    await sql`
+      INSERT INTO posts (id, title, category, author, excerpt, content, image, date)
+      VALUES (${id}, ${title}, ${category}, ${author}, ${excerpt}, ${content}, ${image}, ${date});
+    `;
     
-    posts.unshift(postWithId);
-    savePosts(posts);
-    return NextResponse.json(postWithId, { status: 201 });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to save' }, { status: 500 });
+    return NextResponse.json({ success: true, id }, { status: 201 });
+  } catch (error: any) {
+    console.error('Save error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
 
 export async function PUT(request: Request) {
   try {
-    const updatedPost = await request.json();
-    const posts = getPosts();
-    const index = posts.findIndex((p: any) => p.id === updatedPost.id);
+    const { id, title, category, author, excerpt, content, image } = await request.json();
     
-    if (index !== -1) {
-      posts[index] = { ...posts[index], ...updatedPost };
-      savePosts(posts);
-      return NextResponse.json(posts[index]);
-    }
-    return NextResponse.json({ error: 'Post not found' }, { status: 404 });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to update' }, { status: 500 });
+    await sql`
+      UPDATE posts 
+      SET title = ${title}, category = ${category}, author = ${author}, 
+          excerpt = ${excerpt}, content = ${content}, image = ${image}
+      WHERE id = ${id};
+    `;
+    
+    return NextResponse.json({ success: true });
+  } catch (error: any) {
+    console.error('Update error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
 
 export async function DELETE(request: Request) {
   try {
     const { id } = await request.json();
-    let posts = getPosts();
-    posts = posts.filter((p: any) => p.id !== id);
-    savePosts(posts);
+    await sql`DELETE FROM posts WHERE id = ${id};`;
     return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to delete' }, { status: 500 });
+  } catch (error: any) {
+    console.error('Delete error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

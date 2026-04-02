@@ -3,10 +3,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar/Navbar';
 import styles from './Blog.module.css';
-import fs from 'fs';
-import path from 'path';
+import { sql } from '@vercel/postgres';
 
-export const revalidate = 0; // Disable cache for this page
+export const revalidate = 0; // Force dynamic fetching
 
 export const metadata: Metadata = {
   title: 'Insights & Innovations | Lesteq Blog',
@@ -28,19 +27,15 @@ interface Post {
   image: string;
 }
 
-function getPosts(): Post[] {
-  const postsFilePath = path.join(process.cwd(), 'data/posts.json');
+export default async function BlogPage() {
+  let posts: Post[] = [];
+  
   try {
-    const fileContent = fs.readFileSync(postsFilePath, 'utf-8');
-    return JSON.parse(fileContent);
+    const { rows } = await sql`SELECT * FROM posts ORDER BY date DESC;`;
+    posts = rows as Post[];
   } catch (error) {
-    console.error('Failed to read posts:', error);
-    return [];
+    console.error('Failed to fetch posts from DB:', error);
   }
-}
-
-export default function BlogPage() {
-  const posts = getPosts();
 
   return (
     <main>
