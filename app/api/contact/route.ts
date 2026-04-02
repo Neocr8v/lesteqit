@@ -1,7 +1,5 @@
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
@@ -11,11 +9,21 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    const { data, error } = await resend.emails.send({
-      from: 'Lesteq Website <notifications@lesteqitsolutions.com>',
-      to: ['info@lesteqitsolutions.com'],
-      subject: `${subject} | Website Inquiry`,
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.hostinger.com',
+      port: 465,
+      secure: true, // Use SSL
+      auth: {
+        user: 'info@lesteqitsolutions.com',
+        pass: process.env.SMTP_PASSWORD, // Use environment variable
+      },
+    });
+
+    const mailOptions = {
+      from: `"Lesteq Website" <info@lesteqitsolutions.com>`,
+      to: 'info@lesteqitsolutions.com',
       replyTo: email,
+      subject: `${subject} | Website Inquiry`,
       html: `
         <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 10px; overflow: hidden;">
           <div style="background-color: #7c3aed; padding: 20px; text-align: center;">
@@ -49,14 +57,13 @@ export async function POST(request: Request) {
           </div>
         </div>
       `,
-    });
+    };
 
-    if (error) {
-      return NextResponse.json({ error: error.message || 'Resend error' }, { status: 400 });
-    }
+    await transporter.sendMail(mailOptions);
 
-    return NextResponse.json({ success: true, data });
+    return NextResponse.json({ success: true });
   } catch (error: any) {
+    console.error('Nodemailer error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
