@@ -114,7 +114,16 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
                 </div>
               </header>
               <div className={styles.heroImage}>
-                <Image src={post.image} alt={post.title} fill className={styles.image} priority />
+                {post.image && (
+                  <Image 
+                    src={post.image.startsWith('http') ? post.image : `/${post.image.replace(/^\//, '')}`}
+                    alt={post.title} 
+                    fill 
+                    className={styles.image} 
+                    priority 
+                    unoptimized={!post.image.includes('blob.vercel-storage.com')}
+                  />
+                )}
               </div>
               <article className={styles.articleContent}>{renderContent(post.content)}</article>
               

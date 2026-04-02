@@ -62,14 +62,17 @@ export default async function BlogPage() {
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     <div className={styles.imageWrapper}>
-                      <Image 
-                        src={post.image} 
-                        alt={post.title} 
-                        fill
-                        className={styles.image}
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        priority={index < 3}
-                      />
+                      {post.image && (
+                        <Image 
+                          src={post.image.startsWith('http') ? post.image : `/${post.image.replace(/^\//, '')}`}
+                          alt={post.title} 
+                          fill
+                          className={styles.image}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          priority={index < 3}
+                          unoptimized={!post.image.includes('blob.vercel-storage.com')}
+                        />
+                      )}
                     </div>
                     <div className={styles.content}>
                       <span className={styles.category}>{post.category}</span>
