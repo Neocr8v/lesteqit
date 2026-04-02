@@ -9,13 +9,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
+    const smtpPassword = process.env.SMTP_PASSWORD || 'Sikani@2025';
+
     const transporter = nodemailer.createTransport({
       host: 'smtp.hostinger.com',
       port: 465,
       secure: true, // Use SSL
       auth: {
         user: 'info@lesteqitsolutions.com',
-        pass: process.env.SMTP_PASSWORD, // Use environment variable
+        pass: smtpPassword,
       },
     });
 
