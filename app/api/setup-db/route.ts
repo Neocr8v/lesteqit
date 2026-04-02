@@ -39,7 +39,12 @@ export async function GET() {
 
     return NextResponse.json({ message: 'Table already exists and contains data.' });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('Setup DB Error:', error);
+    return NextResponse.json({ 
+      error: error.message, 
+      stack: error.stack,
+      hint: 'Check if POSTGRES_URL is set in your environment variables on Vercel.'
+    }, { status: 500 });
   } finally {
     client.release();
   }
