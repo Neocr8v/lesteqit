@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     }
 
     const { data, error } = await resend.emails.send({
-      from: 'Lesteq Notifications <notifications@lesteqitsolutions.com>',
+      from: 'Lesteq Website <notifications@lesteqitsolutions.com>',
       to: ['info@lesteqitsolutions.com'],
       subject: `${subject} | Website Inquiry`,
       replyTo: email,
