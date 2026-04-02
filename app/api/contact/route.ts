@@ -61,33 +61,32 @@ export async function POST(request: Request) {
       `,
     };
 
-    await transporter.sendMail(mailOptions);
-
-    // Auto-reply to the sender
-    const autoReplyOptions = {
-      from: `"Lesteq IT Solutions" <info@lesteqitsolutions.com>`,
-      to: email,
-      subject: `We've received your message - Lesteq IT Solutions`,
-      html: `
-        <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 10px; overflow: hidden;">
-          <div style="background-color: #7c3aed; padding: 20px; text-align: center;">
-            <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Thank You for Contacting Us</h1>
+    // Send both emails in parallel to improve performance
+    await Promise.all([
+      transporter.sendMail(mailOptions),
+      transporter.sendMail({
+        from: `"Lesteq IT Solutions" <info@lesteqitsolutions.com>`,
+        to: email,
+        subject: `We've received your message - Lesteq IT Solutions`,
+        html: `
+          <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 10px; overflow: hidden;">
+            <div style="background-color: #7c3aed; padding: 20px; text-align: center;">
+              <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Thank You for Contacting Us</h1>
+            </div>
+            <div style="padding: 30px; line-height: 1.6;">
+              <p style="font-size: 16px;">Hello ${name},</p>
+              <p style="font-size: 16px;">Thank you for reaching out to <strong>Lesteq IT Solutions</strong>. We have received your inquiry regarding "<strong>${subject}</strong>".</p>
+              <p style="font-size: 16px;">Our team is reviewing your message and will get back to you within 24 hours.</p>
+              <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;" />
+              <p style="font-size: 14px; color: #666;">This is an automated confirmation. Please do not reply directly to this email.</p>
+            </div>
+            <div style="background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px; color: #888;">
+              © ${new Date().getFullYear()} Lesteq IT Solutions. All rights reserved.
+            </div>
           </div>
-          <div style="padding: 30px; line-height: 1.6;">
-            <p style="font-size: 16px;">Hello ${name},</p>
-            <p style="font-size: 16px;">Thank you for reaching out to <strong>Lesteq IT Solutions</strong>. We have received your inquiry regarding "<strong>${subject}</strong>".</p>
-            <p style="font-size: 16px;">Our team is reviewing your message and will get back to you within 24 hours.</p>
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;" />
-            <p style="font-size: 14px; color: #666;">This is an automated confirmation. Please do not reply directly to this email.</p>
-          </div>
-          <div style="background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px; color: #888;">
-            © ${new Date().getFullYear()} Lesteq IT Solutions. All rights reserved.
-          </div>
-        </div>
-      `,
-    };
-
-    await transporter.sendMail(autoReplyOptions);
+        `,
+      })
+    ]);
 
     return NextResponse.json({ success: true });
   } catch (error: any) {
