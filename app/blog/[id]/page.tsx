@@ -8,6 +8,8 @@ import fs from 'fs';
 import path from 'path';
 import { notFound } from 'next/navigation';
 
+export const revalidate = 0; // Disable cache for this page
+
 interface Post {
   id: string;
   title: string;

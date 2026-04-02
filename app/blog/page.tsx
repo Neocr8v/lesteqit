@@ -6,6 +6,8 @@ import styles from './Blog.module.css';
 import fs from 'fs';
 import path from 'path';
 
+export const revalidate = 0; // Disable cache for this page
+
 export const metadata: Metadata = {
   title: 'Insights & Innovations | Lesteq Blog',
   description: 'Exploring the frontiers of technology, design, and digital transformation with Lesteq IT Solutions.',
