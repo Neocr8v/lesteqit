@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     }
 
     const { data, error } = await resend.emails.send({
-      from: 'Lesteq <contact@lesteqitsolutions.com>',
+      from: 'Lesteq Website <onboarding@resend.dev>',
       to: ['info@lesteqitsolutions.com'],
       subject: `New Contact Form: ${subject}`,
       replyTo: email,
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     });
 
     if (error) {
-      return NextResponse.json({ error }, { status: 400 });
+      return NextResponse.json({ error: error.message || 'Resend error' }, { status: 400 });
     }
 
     return NextResponse.json({ success: true, data });
